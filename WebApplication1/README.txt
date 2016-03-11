@@ -2,10 +2,12 @@ The following works on laptop to create the .zip file, but the .zip file structu
 
 C:\windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe C:\Users\ddalrymp.ORADEV\Source\Repos\WebApplication1\WebApplication1\build.xml /p:VisualStudioVersion=14.0 /p:Configuration=Debug;SolutionName=WebApplication1;ProjectName=WebApplication1
 
-Trying the following on desktop ( WORKS ):
+-------------------------------------------------------------------------------------------------------------------------------------------------
+BUILD the application after Git Sync on Desktop ( WORKS ):
 
 C:\windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe C:\Users\ddalrymp\Documents\GitHub\WebApplication1\WebApplication1\build.xml /p:VisualStudioVersion=10.0 /p:Configuration=Debug;SolutionName=WebApplication1;ProjectName=WebApplication1
 
 NuGet failures, followed the instructions here (https://docs.nuget.org/consume/package-restore/migrating-to-automatic-package-restore) to remove the elements in the .csproj xml.
 
-There is also a deploy.cmd file in the output directory. Need to review what that does.
+-------------------------------------------------------------------------------------------------------------------------------------------------
+DEPLOY to IIS on Desktop (WIP):
