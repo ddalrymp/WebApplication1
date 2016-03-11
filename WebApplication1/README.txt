@@ -11,3 +11,5 @@ NuGet failures, followed the instructions here (https://docs.nuget.org/consume/p
 
 -------------------------------------------------------------------------------------------------------------------------------------------------
 DEPLOY to IIS on Desktop (WIP):
+
+C:\Users\ddalrymp\Documents\GitHub\WebApplication1\WebApplication1\WebApplication1\obj\Debug\Package\WebApplication1.deploy.cmd /Y
