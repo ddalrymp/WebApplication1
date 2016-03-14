@@ -1,0 +1,2 @@
+REM C:\Users\ddalrymp.ORADEV\Source\Repos\WebApplication1\WebApplication1\WebApplication1\obj\Debug\Package\WebApplication1.deploy.cmd /Y
+C:\Users\ddalrymp.ORADEV\Source\Repos\WebApplication1\WebApplication1\WebApplication1\obj\Release\Package\WebApplication1.deploy.cmd /Y

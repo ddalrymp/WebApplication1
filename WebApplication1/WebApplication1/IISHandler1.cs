@@ -24,35 +24,49 @@ namespace WebApplication1
 
         public void ProcessRequest(HttpContext context)
         {
-
-            //write your handler implementation here.
-            context.Response.ContentType = "text/plain";
-            context.Response.Write("HelloWorld - Change 02");
-
-            try
+            String authHeader = context.Request.Headers.Get("Authorization");
+            if (authHeader == null)
             {
-                String connStr = WebConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
-                SqlConnection conn = new SqlConnection(connStr);
-                conn.Open();
-                context.Response.Write("\nConnected to " + connStr + "");
-                SqlCommand cmd = new SqlCommand();
-                SqlDataReader reader;
+                // ask for credentials ( basic auth )
+                context.Response.StatusCode = 401;
+                context.Response.Headers.Add("WWW-Authenticate", "Basic");
+            } else
+            {
+                // Authorization: Bearer is *not* stored on the browser client
+                // debating the usefullness of a Bearer token being returned - or any token.
+                context.Response.Headers.Add("Authorization", "Bearer FooBar");
+                //write your handler implementation here.
+                context.Response.ContentType = "text/plain";
+                context.Response.Write("HelloWorld - Change 02\n");
+                context.Response.Write("Authorization: " + authHeader + "\n");
+                context.Response.Write("AppStartTime: " + context.Application["AppStartTime"]);
 
-                cmd.CommandText = "SELECT Id FROM MyFirstTable";
-                cmd.CommandType = CommandType.Text;
-                cmd.Connection = conn;
-
-                reader = cmd.ExecuteReader();
-                while (reader.Read())
+                try
                 {
-                    context.Response.Write("\n Id = " + reader.GetInt32(0));
+                    String connStr = WebConfigurationManager.ConnectionStrings["DbConnection"].ConnectionString;
+                    SqlConnection conn = new SqlConnection(connStr);
+                    conn.Open();
+                    context.Response.Write("\nConnected to " + connStr + "");
+                    SqlCommand cmd = new SqlCommand();
+                    SqlDataReader reader;
+
+                    cmd.CommandText = "SELECT Id FROM MyFirstTable";
+                    cmd.CommandType = CommandType.Text;
+                    cmd.Connection = conn;
+
+                    reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        context.Response.Write("\n Id = " + reader.GetInt32(0));
+                    }
+                    conn.Close();
+                    context.Response.Write("\nClosed Connection");
                 }
-                conn.Close();
-                context.Response.Write("\nClosed Connection");
-            }
-            catch (Exception ex)
-            {
-                context.Response.Write("\nException: " + ex.ToString());
+                catch (Exception ex)
+                {
+                    context.Response.Write("\nException: " + ex.ToString());
+                }
+
             }
         }
 
