@@ -5,17 +5,19 @@ REM C:\windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe C:\Users\ddalrym
 
 REM C:\windows\Microsoft.NET\Framework64\v4.0.30319\MSBuild.exe C:\Users\ddalrymp.ORADEV\Source\Repos\WebApplication1\WebApplication1\build.xml /p:VisualStudioVersion=14.0 /p:Configuration=Release;SolutionName=WebApplication1;ProjectName=WebApplication1
 
-REM reg.exe query "HKLM\SOFTWARE\Microsoft\MSBuild\ToolsVersions\4.0" /v MSBuildToolsPath
+reg.exe query "HKLM\SOFTWARE\Microsoft\MSBuild\ToolsVersions\4.0" /v MSBuildToolsPath
 
 if "%MSBuildPath%" == "" (
-for /F "usebackq tokens=1,2,*" %%h  in (`reg query "HKLM\SOFTWARE\Microsoft\MSBuild\ToolsVersions\4.0" /s  ^| findstr -i "MSBuildToolsPath"`) do (
+for /F "usebackq tokens=1,2,*" %%h  in (`reg query "HKLM\SOFTWARE\Microsoft\MSBuild\ToolsVersions\4.0" /v MSBuildToolsPath  ^| findstr -i "MSBuildToolsPath"`) do (
 if /I "%%h" == "MSBuildToolsPath" ( 
 if /I "%%i" == "REG_SZ" ( 
 if not "%%j" == "" ( 
-if "%%~dpj" == "%%j" ( 
+if /I "%%~dpj" == "%%j" ( 
 set MSBuildPath=%%j
 ))))))
 
+echo "%MSBuildPath%"
+ 
 if not exist "%MSBuildPath%\MSBuild.exe" (
 echo. MSBuild.exe is not found on this machine. Please install MSBuild before execute the script. 
 goto :usage
